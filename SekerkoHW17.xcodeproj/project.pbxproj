@@ -24,6 +24,7 @@
 		CE8307C9283CDD2D00285A93 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8307C7283CDD2D00285A93 /* LaunchScreen.storyboard */; };
 		CE8307D2283CE13A00285A93 /* FolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8307D0283CE13A00285A93 /* FolderCell.swift */; };
 		CE8307D3283CE13A00285A93 /* FolderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE8307D1283CE13A00285A93 /* FolderCell.xib */; };
+		CE8568352858DD5400CEEB33 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CE8568342858DD5400CEEB33 /* KeychainSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE8568352858DD5400CEEB33 /* KeychainSwift in Frameworks */,
 				CE59E6D028420B03000A9313 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -205,6 +207,7 @@
 			name = SekerkoHW17;
 			packageProductDependencies = (
 				CE59E6CF28420B03000A9313 /* SnapKit */,
+				CE8568342858DD5400CEEB33 /* KeychainSwift */,
 			);
 			productName = SekerkoHW17;
 			productReference = CE8307B9283CDD2900285A93 /* SekerkoHW17.app */;
@@ -236,6 +239,7 @@
 			mainGroup = CE8307B0283CDD2900285A93;
 			packageReferences = (
 				CE59E6CE28420B03000A9313 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CE8568332858DD5400CEEB33 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = CE8307BA283CDD2900285A93 /* Products */;
 			projectDirPath = "";
@@ -504,6 +508,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		CE8568332858DD5400CEEB33 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -511,6 +523,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE59E6CE28420B03000A9313 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		CE8568342858DD5400CEEB33 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE8568332858DD5400CEEB33 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
