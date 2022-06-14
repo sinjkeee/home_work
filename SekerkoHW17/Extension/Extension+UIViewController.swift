@@ -3,12 +3,17 @@ import UIKit
 import KeychainSwift
 
 extension UIViewController {
+    enum AuthKeys: String {
+        case login = "login"
+        case password = "password"
+    }
+    
     func showAlertIfPasswordIsSet(blur: UIVisualEffectView) {
         let alertController = UIAlertController(title: "Access denied", message: "Your password?", preferredStyle: .alert)
         let okButton = UIAlertAction(title: "Ok", style: .cancel) { _ in
             guard let textPassword = alertController.textFields?.first?.text else { return }
             let keychain = KeychainSwift()
-            guard let realPassword = keychain.get("password") else { return }
+            guard let realPassword = keychain.get(AuthKeys.password.rawValue) else { return }
             if textPassword != realPassword {
                 self.showErrorPasswordAlert(message: "Wrong password!", passwordIsSet: true, blur: blur)
             } else {
@@ -40,7 +45,7 @@ extension UIViewController {
             guard alertController.textFields?.first?.text != "" else { return self.showErrorPasswordAlert(message: "Enter some password text!", passwordIsSet: false, blur: blur) }
             guard let passwordText = alertController.textFields?.first?.text else { return }
             let keychain = KeychainSwift()
-            keychain.set(passwordText, forKey: "password")
+            keychain.set(passwordText, forKey: AuthKeys.password.rawValue)
             UIView.animate(withDuration: 0.3, delay: 0) {
                 blur.alpha = 0
             } completion: { _ in
@@ -67,7 +72,7 @@ extension UIViewController {
 
     func choiceAlertAction(blurView: UIVisualEffectView) {
         let keychain = KeychainSwift()
-        keychain.get("password") != nil ? showAlertIfPasswordIsSet(blur: blurView) : showAlertIfPasswordIsNOTSet(blur: blurView)
+        keychain.get(AuthKeys.password.rawValue) != nil ? showAlertIfPasswordIsSet(blur: blurView) : showAlertIfPasswordIsNOTSet(blur: blurView)
     }
     
     func createAndShowBlurEffect() -> UIVisualEffectView {
