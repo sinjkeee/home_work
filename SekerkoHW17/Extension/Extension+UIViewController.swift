@@ -1,12 +1,14 @@
 import Foundation
 import UIKit
+import KeychainSwift
 
 extension UIViewController {
     func showAlertIfPasswordIsSet(blur: UIVisualEffectView) {
         let alertController = UIAlertController(title: "Access denied", message: "Your password?", preferredStyle: .alert)
         let okButton = UIAlertAction(title: "Ok", style: .cancel) { _ in
             guard let textPassword = alertController.textFields?.first?.text else { return }
-            guard let realPassword = UserDefaults.standard.value(forKey: "password") as? String else { return }
+            let keychain = KeychainSwift()
+            guard let realPassword = keychain.get("password") else { return }
             if textPassword != realPassword {
                 self.showErrorPasswordAlert(message: "Wrong password!", passwordIsSet: true, blur: blur)
             } else {
@@ -27,11 +29,18 @@ extension UIViewController {
     
     func showAlertIfPasswordIsNOTSet(blur: UIVisualEffectView) {
         let alertController = UIAlertController(title: "Security", message: "Do you want to set up a password?", preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: "Cancel", style: .destructive)
+        let cancelButton = UIAlertAction(title: "Cancel", style: .destructive) { _ in
+            UIView.animate(withDuration: 0.3, delay: 0) {
+                blur.alpha = 0
+            } completion: { _ in
+                blur.removeFromSuperview()
+            }
+        }
         let okButton = UIAlertAction(title: "Set password", style: .cancel) { _ in
             guard alertController.textFields?.first?.text != "" else { return self.showErrorPasswordAlert(message: "Enter some password text!", passwordIsSet: false, blur: blur) }
             guard let passwordText = alertController.textFields?.first?.text else { return }
-            UserDefaults.standard.set(passwordText, forKey: "password")
+            let keychain = KeychainSwift()
+            keychain.set(passwordText, forKey: "password")
             UIView.animate(withDuration: 0.3, delay: 0) {
                 blur.alpha = 0
             } completion: { _ in
@@ -57,7 +66,8 @@ extension UIViewController {
     }
 
     func choiceAlertAction(blurView: UIVisualEffectView) {
-        UserDefaults.standard.value(forKey: "password") != nil ? showAlertIfPasswordIsSet(blur: blurView) : showAlertIfPasswordIsNOTSet(blur: blurView)
+        let keychain = KeychainSwift()
+        keychain.get("password") != nil ? showAlertIfPasswordIsSet(blur: blurView) : showAlertIfPasswordIsNOTSet(blur: blurView)
     }
     
     func createAndShowBlurEffect() -> UIVisualEffectView {
