@@ -5,7 +5,7 @@ enum TypeItem: Int {
     case folder = 0
     case image
 }
-
+//some comment
 enum StateType {
     case selection
     case create
