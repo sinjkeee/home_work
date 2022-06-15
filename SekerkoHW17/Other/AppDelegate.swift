@@ -1,11 +1,5 @@
-//
-//  AppDelegate.swift
-//  SekerkoHW17
-//
-//  Created by user on 24.05.22.
-//
-
 import UIKit
+import KeychainSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,6 +7,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        hasRunBefore()
         return true
     }
     
@@ -36,5 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+    // method to check the first launch of the application and remove the key from the keychain
+    func hasRunBefore() {
+        if !UserDefaults.standard.bool(forKey: "hasRunBefore") {
+            let keychain = KeychainSwift()
+            keychain.clear()
+            UserDefaults.standard.set(true, forKey: "hasRunBefore")
+        }
+    }
 }
 
