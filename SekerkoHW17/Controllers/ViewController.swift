@@ -1,11 +1,11 @@
 import UIKit
 
-//MARK: - Enum
+//MARK: - Enums
 enum TypeItem: Int {
     case folder = 0
     case image
 }
-//some comment
+
 enum StateType {
     case selection
     case create
@@ -171,6 +171,7 @@ class ViewController: UIViewController {
     
     func presentImagePicker() {
         imagePicker.sourceType = .photoLibrary
+        //imagePicker.sourceType = .camera
         imagePicker.allowsEditing = true
         present(imagePicker, animated: true)
     }
